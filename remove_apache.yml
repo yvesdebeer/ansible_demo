@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository index
+    dnf:
+      update_cache: yes
+  - name: install httpd package
+    dnf:
+      name: httpd
+      state: absent
+  - name: add php support for apache
+    dnf:
+      name: php
+      state: absent

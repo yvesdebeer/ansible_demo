@@ -1,2 +1,2 @@
 192.168.0.147 ansible_user=ydebeer
-148.100.76.240 ansible_user=linux1
+148.100.76.240 ansible_user=linux1 ansible_python_interpreter=/usr/libexec/platform-python
