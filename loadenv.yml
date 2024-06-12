@@ -38,7 +38,7 @@
     - name: clone git repo
       # Content suggestion provided by Ansible Lightspeed
       ansible.builtin.git:
-        repo: https://github.com/thebeardedgeek/redhatchallengedbfiles.git
+        repo: https://github.com/yvesdebeer/ansible_demo.git
         dest: "{{ checkout_dir }}"
 
     - name: create patient library
