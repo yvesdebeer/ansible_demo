@@ -1,0 +1,44 @@
+- hosts: ibmi
+  gather_facts: false
+  collections:
+   - ibm.power_ibmi
+
+  tasks:
+  #1
+  - name: check if the user already exists
+    ibmi_sql_query:
+      sql: "SELECT * FROM QSYS2.USER_INFO_BASIC WHERE AUTHORIZATION_NAME = 'ANSTEST'"
+    register: user_query_result
+
+  #2
+  - name: display the result from the query
+    debug:
+      msg: "{{ user_query_result }}"
+
+  #3
+  - name: assert the user doesn't exist
+    assert:
+      that:
+      - (user_query_result.row | length) == 0
+  #4.
+  - name: create the user
+    ibmi_cl_command:
+      cmd: "CRTUSRPRF USRPRF(ANSTEST)"
+    register: cl_result
+
+  #5.
+  - name: set default shell
+    ibmi_sql_execute:
+      sql: CALL QSYS2.SET_PASE_SHELL_INFO('ANSTEST', '/QOpenSys/pkgs/bin/bash')
+    register: set_shell_result
+
+  #6
+  - name: display the result from the procedure call
+    debug:
+      msg: "{{ set_shell_result }}"
+
+  #7.
+  - name: delete the user
+    ibmi_cl_command:
+      cmd: "DLTUSRPRF USRPRF(ANSTEST)"
+

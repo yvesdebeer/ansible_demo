@@ -1,0 +1,9 @@
+- hosts: ibmi
+  roles:
+    - yum-update
+
+  tasks:
+    - name: after the role
+      debug:
+        msg: all done
+

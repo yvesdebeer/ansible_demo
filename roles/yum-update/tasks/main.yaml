@@ -1,0 +1,18 @@
+- name: "Check that {{ package_name }} is installed"
+  ansible.builtin.yum:
+    name: "{{ package_name }}"
+    state: present
+    use_backend: yum
+  environment:
+    PATH: "/QOpenSys/pkgs/bin:/QOpenSys/usr/bin:/usr/ccs/bin:/QOpenSys/usr/bin/X11:/usr/sbin:.:/usr/bin"
+  vars:
+    ansible_python_interpreter: /QOpenSys/pkgs/bin/python2
+  register: result
+
+- name: Print yum check result
+  debug:
+    msg: "{{ result }}"
+
+# Here is where we would install Python if we didn't have it
+# In reality we can do this all in one step, but this is just
+# for demonstration purposes for the lab

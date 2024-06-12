@@ -1,0 +1,28 @@
+- hosts: ibmi
+  gather_facts: no
+
+  vars:
+    checkout_dir: '/home/TEST/app'
+
+  tasks:
+    - name: create patient library
+      ibm.power_ibmi.ibmi_cl_command:
+        cmd: 'CRTLIB LIB(PATIENT)'
+      ignore_errors: True
+
+    - name: run the CL command to ceate patient table
+      ibm.power_ibmi.ibmi_cl_command:
+        cmd: RUNSQLSTM SRCSTMF('/home/TEST/app/PatientInfoTable.sql') COMMIT(*NONE)
+      register: crt_patient_result
+      ignore_errors: True
+    
+    - name: query the patient info table
+      ibm.power_ibmi.ibmi_sql_query:
+        sql: "SELECT * FROM PATIENT.INFO"
+      register: patient_info
+
+    - name: display the collect list crt_patient_result
+      debug:
+        msg: "{{ patient_info.row }}"
+
+

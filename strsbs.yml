@@ -1,0 +1,9 @@
+- hosts: ibmi
+  gather_facts: no
+  collections:
+    - ibm.power_ibmi
+
+  tasks:
+    - name: Start a subsystem.
+      ibm.power_ibmi.ibmi_start_subsystem:
+        subsystem: QCMN

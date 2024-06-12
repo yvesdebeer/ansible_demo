@@ -1,0 +1,8 @@
+- hosts: ibmi
+  gather_facts: no
+
+  tasks:
+    - name: End a ibmi subsystem with options
+      ibm.power_ibmi.ibmi_end_subsystem:
+        subsystem: QCMN
+        how_to_end: '*IMMED'
