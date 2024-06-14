@@ -15,7 +15,7 @@
     dnf:
       name: php
       state: latest
-  - name start httpd
+  - name: start httpd
     tags: apache,centos,httpd
     service:
       name: httpd
